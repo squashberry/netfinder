@@ -1,0 +1,4 @@
+import { Bookmark,Compass,Home,Search,UserRound } from 'lucide-react';
+import { NavLink } from 'react-router-dom';
+const items=[['/','Home',Home],['/discover','Discover',Compass],['/search','Search',Search],['/watchlist','Watchlist',Bookmark],['/profile','Profile',UserRound]] as const;
+export function BottomNav(){return <nav className="fixed inset-x-3 bottom-3 z-50 rounded-[1.6rem] border border-white/10 bg-[rgba(20,20,24,.86)] p-2 shadow-2xl backdrop-blur-xl md:hidden" style={{paddingBottom:'calc(.5rem + env(safe-area-inset-bottom))'}}><div className="grid grid-cols-5">{items.map(([to,label,Icon])=><NavLink key={to} to={to} className={({isActive})=>'relative flex flex-col items-center gap-1 rounded-[1.2rem] px-1 py-2 text-[10px] font-medium transition '+(isActive?'bg-white text-black':'text-white/55')}><Icon size={18}/><span>{label}</span></NavLink>)}</div></nav>}

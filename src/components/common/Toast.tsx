@@ -1,0 +1,3 @@
+import { CheckCircle2,X } from 'lucide-react';
+import { useAppStore } from '../../stores/useAppStore';
+export function Toast(){const {toast,clearToast}=useAppStore();if(!toast)return null;return <div className="fixed inset-x-4 bottom-[calc(5.75rem+env(safe-area-inset-bottom))] z-[80] mx-auto flex max-w-sm items-center gap-3 rounded-2xl border border-white/10 bg-black/85 px-4 py-3 text-white shadow-2xl backdrop-blur-xl md:bottom-6"><CheckCircle2 size={18}/><span className="flex-1 text-sm font-medium">{toast.message}</span><button onClick={clearToast} aria-label="Close notification"><X size={16}/></button></div>}

@@ -1,0 +1,10 @@
+import { Download,X } from 'lucide-react';
+import { useEffect,useState } from 'react';
+declare global{interface WindowEventMap{beforeinstallprompt:BeforeInstallPromptEvent}}
+interface BeforeInstallPromptEvent extends Event{prompt:()=>Promise<void>;userChoice:Promise<{outcome:'accepted'|'dismissed'}>}
+export function InstallPrompt(){
+ const [event,setEvent]=useState<BeforeInstallPromptEvent>();const [open,setOpen]=useState(false);
+ useEffect(()=>{const handler=(e:BeforeInstallPromptEvent)=>{e.preventDefault();setEvent(e);if(localStorage.getItem('netfinder.install-dismissed')!=='1'&&!window.matchMedia('(display-mode: standalone)').matches)setOpen(true)};window.addEventListener('beforeinstallprompt',handler);return()=>window.removeEventListener('beforeinstallprompt',handler)},[]);
+ if(!event||!open)return null;
+ return <div className="fixed inset-x-4 bottom-[calc(5.5rem+env(safe-area-inset-bottom))] z-[70] mx-auto max-w-md rounded-3xl border border-white/10 bg-[rgba(18,18,22,.92)] p-4 text-white shadow-2xl backdrop-blur-xl md:bottom-6"><button className="absolute right-3 top-3 p-2 text-white/60" aria-label="Dismiss install prompt" onClick={()=>{localStorage.setItem('netfinder.install-dismissed','1');setOpen(false)}}><X size={16}/></button><div className="flex gap-3"><div className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-white text-black"><Download size={19}/></div><div><h3 className="font-semibold">Install Netfinder</h3><p className="mt-1 pr-6 text-sm leading-5 text-white/65">Get a faster, app-like movie discovery experience.</p><div className="mt-3 flex gap-2"><button className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-black" onClick={async()=>{await event.prompt();setOpen(false);localStorage.setItem('netfinder.install-dismissed','1')}}>Install</button><button className="rounded-full border border-white/15 px-4 py-2 text-sm font-semibold" onClick={()=>{localStorage.setItem('netfinder.install-dismissed','1');setOpen(false)}}>Not now</button></div></div></div></div>
+}

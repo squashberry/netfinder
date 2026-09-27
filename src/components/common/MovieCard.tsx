@@ -1,0 +1,20 @@
+import { useNavigate } from 'react-router-dom';
+import { Bookmark,Star } from 'lucide-react';
+import type { Movie } from '../../types';
+import { getPosterUrl } from '../../lib/images';
+import { useAppStore } from '../../stores/useAppStore';
+
+export function MovieCard({movie,compact=false}:{movie:Movie;compact?:boolean}){
+  const navigate=useNavigate();const {watchlist,toggleWatchlist}=useAppStore();const saved=watchlist.some(x=>x.movieId===movie.id);const image=getPosterUrl(movie);
+  const width=compact?'w-[126px] sm:w-[150px]':'w-[148px] sm:w-[178px] md:w-[190px]';
+  return <article className={'group relative shrink-0 cursor-pointer '+width} onClick={()=>navigate('/movie/'+movie.id)}>
+    <div className="relative aspect-[2/3] overflow-hidden rounded-[1.15rem] bg-[var(--surface-2)] shadow-[0_18px_50px_rgba(0,0,0,.18)] transition duration-300 group-hover:-translate-y-1 group-hover:scale-[1.02]">
+      {image?<img src={image} alt={movie.title} loading="lazy" className="h-full w-full object-cover transition duration-500 group-hover:scale-105" onError={e=>{e.currentTarget.style.display='none'}}/>:null}
+      {!image&&<div className="absolute inset-0 grid place-items-center bg-gradient-to-br from-white/10 to-black/40 p-4 text-center text-xs font-semibold text-white/80">NETFINDER<br/>No artwork available</div>}
+      <div className="absolute inset-x-0 top-0 flex justify-end p-2 opacity-100 sm:opacity-0 sm:transition sm:group-hover:opacity-100">
+        <button aria-label={saved?'Remove from watchlist':'Add to watchlist'} className="rounded-full border border-white/15 bg-black/45 p-2 text-white backdrop-blur" onClick={e=>{e.stopPropagation();toggleWatchlist(movie)}}><Bookmark size={15} fill={saved?'currentColor':'none'}/></button>
+      </div>
+    </div>
+    <div className="mt-3 min-w-0"><h3 className="truncate text-sm font-semibold tracking-[-0.01em]">{movie.title}</h3><div className="mt-1 flex items-center gap-2 text-[11px] text-[var(--muted)]">{movie.releaseDate&&<span>{movie.releaseDate.slice(0,4)}</span>}{movie.rating!==undefined&&<span className="inline-flex items-center gap-1"><Star size={11} fill="currentColor"/>{movie.rating.toFixed(1)}</span>}</div></div>
+  </article>
+}

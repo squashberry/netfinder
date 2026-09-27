@@ -1,0 +1,7 @@
+import { Navigate,Route,Routes } from 'react-router-dom';
+import { AppShell } from './components/layout/AppShell';
+import { AboutPage } from './pages/AboutPage'; import { DiscoverPage } from './pages/DiscoverPage'; import { GenrePage } from './pages/GenrePage';
+import { HistoryPage } from './pages/HistoryPage'; import { HomePage } from './pages/HomePage'; import { MovieDetailsPage } from './pages/MovieDetailsPage';
+import { NotFoundPage } from './pages/NotFoundPage'; import { ProfilePage } from './pages/ProfilePage'; import { SearchPage } from './pages/SearchPage';
+import { SettingsPage } from './pages/SettingsPage'; import { WatchlistPage } from './pages/WatchlistPage';
+export default function App(){return <Routes><Route element={<AppShell/>}><Route path="/" element={<HomePage/>}/><Route path="/home" element={<Navigate to="/" replace/>}/><Route path="/discover" element={<DiscoverPage/>}/><Route path="/search" element={<SearchPage/>}/><Route path="/movie/:id" element={<MovieDetailsPage/>}/><Route path="/tv/:id" element={<MovieDetailsPage/>}/><Route path="/genre/:id" element={<GenrePage/>}/><Route path="/watchlist" element={<WatchlistPage/>}/><Route path="/history" element={<HistoryPage/>}/><Route path="/profile" element={<ProfilePage/>}/><Route path="/settings" element={<SettingsPage/>}/><Route path="/about" element={<AboutPage/>}/><Route path="*" element={<NotFoundPage/>}/></Route></Routes>}

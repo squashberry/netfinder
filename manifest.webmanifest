@@ -1,1 +1,1 @@
-{"name":"Netfinder","short_name":"Netfinder","description":"Find something worth watching.","start_url":"./","scope":"./","display":"standalone","orientation":"portrait","theme_color":"#08080b","background_color":"#08080b","icons":[{"src":"./netfinder.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]}
+{"name":"Netfinder","short_name":"Netfinder","description":"Find something worth watching.","start_url":"./","scope":"./","display":"standalone","orientation":"portrait","theme_color":"#08080b","background_color":"#08080b"}
